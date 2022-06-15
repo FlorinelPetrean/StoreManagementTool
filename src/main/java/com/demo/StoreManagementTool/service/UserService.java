@@ -5,13 +5,9 @@ import com.demo.StoreManagementTool.model.entity.AppUser;
 import com.demo.StoreManagementTool.repository.CrudRepository;
 import com.demo.StoreManagementTool.repository.UserRepository;
 import com.demo.StoreManagementTool.utils.BeanUtil;
-
 import com.demo.StoreManagementTool.utils.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -44,7 +40,6 @@ public class UserService extends CrudService<AppUser> {
 
     @Override
     public void deleteById(Long id) {
-        AppUser user = findById(id);
         super.deleteById(id);
     }
 

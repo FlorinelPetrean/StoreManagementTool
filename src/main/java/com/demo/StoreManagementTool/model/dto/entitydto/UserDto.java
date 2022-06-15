@@ -19,25 +19,17 @@ public class UserDto implements IDto<AppUser> {
 
     private String password;
 
-    private String firstName;
-
-    private String lastName;
-
     private String address;
 
-    private String dateOfBirth;
 
     private String role;
 
     public UserDto toDto(AppUser user) {
-        String dateOfBirth = user.getDateOfBirth().toString();
         return UserDto.builder()
+                .id(user.getId())
                 .username(user.getUsername())
                 .password(user.getPassword())
-                .firstName(user.getFirstName())
-                .lastName(user.getLastName())
                 .address(user.getAddress())
-                .dateOfBirth(dateOfBirth)
                 .role(user.getRole())
                 .build();
     }

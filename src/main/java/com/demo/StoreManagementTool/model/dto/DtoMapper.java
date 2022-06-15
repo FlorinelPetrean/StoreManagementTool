@@ -1,9 +1,11 @@
 package com.demo.StoreManagementTool.model.dto;
 
 import com.demo.StoreManagementTool.model.dto.entitydto.IDto;
+import com.demo.StoreManagementTool.model.dto.entitydto.ProductDto;
 import com.demo.StoreManagementTool.model.dto.entitydto.UserDto;
 import com.demo.StoreManagementTool.model.entity.AppUser;
 import com.demo.StoreManagementTool.model.entity.IEntity;
+import com.demo.StoreManagementTool.model.entity.Product;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +22,8 @@ public class DtoMapper {
         this.context = context;
         _handlerMap.put(UserDto.class, AppUser.class);
         _handlerMap.put(AppUser.class, UserDto.class);
+        _handlerMap.put(Product.class, ProductDto.class);
+        _handlerMap.put(ProductDto.class, Product.class);
     }
 
 

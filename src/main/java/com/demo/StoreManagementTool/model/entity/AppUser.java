@@ -31,17 +31,10 @@ public class AppUser implements IEntity<AppUser> {
     @Column
     private String password;
 
-    @Column
-    private String firstName;
-
-    @Column
-    private String lastName;
 
     @Column
     private String address;
 
-    @Column
-    private Date dateOfBirth;
 
     @Column
     private String role;
@@ -50,15 +43,11 @@ public class AppUser implements IEntity<AppUser> {
     @Override
     public AppUser toEntity(IDto<AppUser> dto) {
         UserDto userDto = (UserDto) dto;
-        LocalDate dateOfBirth = LocalDate.parse(userDto.getDateOfBirth());
         return AppUser.builder()
                 .id((userDto.getId()))
                 .username(userDto.getUsername())
                 .password(userDto.getPassword())
-                .firstName(userDto.getFirstName())
-                .lastName(userDto.getLastName())
                 .address(userDto.getAddress())
-                .dateOfBirth(Date.valueOf(dateOfBirth))
                 .role(userDto.getRole())
                 .build();
     }

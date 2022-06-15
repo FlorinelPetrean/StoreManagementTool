@@ -15,26 +15,24 @@ import java.io.IOException;
 
 @Component
 @RequiredArgsConstructor
-@Order(3)
-public class AdminFilter extends OncePerRequestFilter {
+@Order(2)
+public class AuthFilter extends OncePerRequestFilter {
+
     private final UserService userService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String[] credentials = request.getHeader("Authorization").split(":");
         String username = credentials[0];
-
-        if(username != null) {
-            AppUser user = userService.findByUsername(username);
-            if (!user.getRole().equals("ADMIN")) {
-                if(!request.getMethod().equals("GET")) {
-                    response.setStatus(401);
-                    response.getOutputStream().write("User is not admin! Operation is not permitted".getBytes());
-                    return;
-                }
+        String password = credentials[1];
+        if (username != null && password != null) {
+            AppUser user = userService.login(username, password);
+            if (user.getId() == null) {
+                response.setStatus(401);
+                response.getOutputStream().write("Credentials are invalid!".getBytes());
+                return;
             }
         }
-
         filterChain.doFilter(request, response);
     }
 
@@ -49,4 +47,3 @@ public class AdminFilter extends OncePerRequestFilter {
         return false;
     }
 }
-
