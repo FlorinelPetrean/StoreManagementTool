@@ -1,6 +1,6 @@
 package com.demo.StoreManagementTool.filters;
 
-import com.ds.EnergyUtilityPlatform.utils.Constants;
+import com.demo.StoreManagementTool.utils.Constants;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;

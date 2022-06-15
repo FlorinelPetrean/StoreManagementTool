@@ -2,7 +2,6 @@ package com.demo.StoreManagementTool.filters;
 
 import com.demo.StoreManagementTool.model.entity.AppUser;
 import com.demo.StoreManagementTool.service.UserService;
-import com.demo.StoreManagementTool.utils.JwtUtility;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -16,18 +15,13 @@ import java.io.IOException;
 
 @Component
 @RequiredArgsConstructor
-@Order(3)
+@Order(2)
 public class AdminFilter extends OncePerRequestFilter {
-    private final JwtUtility jwtUtility;
     private final UserService userService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String authorizationHeader = request.getHeader("Authorization");
-        String jwtToken = authorizationHeader.substring(7);
-        String username = jwtUtility.getUsernameFromToken(jwtToken);
-
-
+        String username = request.getHeader("Authorization");
         if(username != null) {
             AppUser user = userService.findByUsername(username);
             if (!user.getRole().equals("ADMIN")) {
@@ -46,9 +40,7 @@ public class AdminFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         String path = request.getRequestURI();
-        if (path.equals("/api/user/create"))
-            return true;
-        if (path.equals("/api/user/login"))
+        if (path.equals("/user/login"))
             return true;
         return false;
     }

@@ -8,19 +8,16 @@ import com.demo.StoreManagementTool.model.dto.entitydto.UserDto;
 import com.demo.StoreManagementTool.model.entity.AppUser;
 import com.demo.StoreManagementTool.service.ICrudService;
 import com.demo.StoreManagementTool.service.UserService;
-import com.demo.StoreManagementTool.utils.JwtUtility;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/user")
 public class UserController extends CrudController<AppUser, UserDto> {
     private final UserService userService;
-    private final JwtUtility jwtUtility;
 
-    public UserController(ICrudService<AppUser> service, DtoMapper dtoMapper, JwtUtility jwtUtility) {
+    public UserController(ICrudService<AppUser> service, DtoMapper dtoMapper) {
         super(service, dtoMapper);
         this.userService = (UserService) service;
-        this.jwtUtility = jwtUtility;
     }
 
     @GetMapping(path = "/u/{username}")
@@ -39,9 +36,7 @@ public class UserController extends CrudController<AppUser, UserDto> {
             throw new Exception("Invalid Credentials", e);
         }
 
-        String token = jwtUtility.generateToken(userDetails);
-        return new JwtResponse(token, user.getRole());
+        return new JwtResponse(user.getUsername(), user.getRole());
     }
-
 
 }

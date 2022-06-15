@@ -32,7 +32,6 @@ public class UserDto implements IDto<AppUser> {
     public UserDto toDto(AppUser user) {
         String dateOfBirth = user.getDateOfBirth().toString();
         return UserDto.builder()
-                .id(user.getId())
                 .username(user.getUsername())
                 .password(user.getPassword())
                 .firstName(user.getFirstName())
